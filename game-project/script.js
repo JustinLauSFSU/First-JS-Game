@@ -24,7 +24,7 @@ function play(){
 }
 
 //the attack mecha tyranitar will use
-/*fuction mechaAttack(){
+function mechaAttack(){
     //chooses 2 choices for an attack
     var attackChoice = Math.ceil(Math.random()*3);
     //if choice is 1 run this
@@ -102,7 +102,7 @@ function play(){
         bottomRow.innerHTML += "Mecha Tyranitar's attack missed";
         }
     }
-}*/
+}
 
 //the function to call tackle
 function tackle(){
@@ -127,26 +127,27 @@ function tackle(){
         mechaHP.style.width = mechaHPBarWidth + "px";
 
         //if the enemy HP is 0, it tells the user they won
-        if (mechaHP == 0){
+        /*if (mechaHP == 0){
             //the reason for += is because we want to see the damage done before the win message shows
             bottomRow.innerHTML += "<br> You succesfully defeated Mecha Tyranitar! You win!";
             //bbuttons go away once you win
             tyranitarMoves.style.visibility = "hidden";
-        }
+        }*/
     }
     else{
         bottomRow.innerHTML = "Your attack missed";
     }
     //if the enemy HP is 0, it tells the user they won
-    /*if (mechaHP == 0){
+    if (mechaHP == 0){
         //the reason for += is because we want to see the damage done before the win message shows
         bottomRow.innerHTML += "<br> You succesfully defeated Mecha Tyranitar! You win!";
         //bbuttons go away once you win
         tyranitarMoves.style.visibility = "hidden";
-    }*/
-    /*else{
+    }
+    //mecha Tyranitar will attack if it doesn't die
+    else{
         mechaAttack();
-    }*/
+    }
 }
 
 //calls the move protect
@@ -195,11 +196,17 @@ function headSmash(){
         //bbuttons go away once you win
         tyranitarMoves.style.visibility = "hidden";
     }
+    else {
+        mechaAttack();
+    }
     if (tyranitarHP == 0){
         //the reason for += is because we want to see the damage done before the lose message shows
         bottomRow.innerHTML += "<br> You have been defeated!";
         //bbuttons go away once you lose
         tyranitarMoves.style.visibility = "hidden";
+    }
+    else{
+        mechaAttack();
     }
 }
 
@@ -225,10 +232,23 @@ function explosion(){
     //tells the user they have 0HP left
     bottomRow.innerHTML = "Tyranitar used Explosion! <br> Your Explosion did " + damage + " damage. Mecha Tyranitar now has " + mechaHP + " HP. <br> You have 0 HP left";
     //tells the user they lose
-    bottomRow.innerHTML += "<br> You have been defeated!" 
+    bottomRow.innerHTML += "<br> You have been defeated! <br> <button onclick = 'restart()' class='buttonFormat'> Try Again? </button>" 
+    //bbuttons go away once you lose
+    tyranitarMoves.style.visibility = "hidden";
     //variable for HP width
     var mechaHPBarWidth = (mechaHP/100)*300;
     //new width
     mechaHP.style.width = mechaHPBarWidth + "px";
     
+}
+
+//this will restart the game once the battle is finished
+function restart(){
+    //sets the character HP back to the default 100;
+    tyranitarHP = 100;
+    mechaHP = 100;
+    //will show attacks again
+    tyranitarMoves.style.visibility = "visible";
+    //will call the play function again
+    play();
 }
