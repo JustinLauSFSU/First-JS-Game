@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Battle</title>
+        <!--Calls the css-->
+        <link rel = "stylesheet" type = "text/css" href = "styles.css">      
+    </head>
+    <body>
+        <!--This is intended to contain the important things-->
+        <div id = "container">
+            <!--This will be for the top part of the page-->
+            <div id = "topRow">
+                <!--Working with stats such as health and attacks-->
+                <div id = "tyranitarStats" class = "stats">
+                    <!--Labels the hp-->
+                    <span class = "hpLabel"> HP </span>
+                    <!--Hp bar border-->
+                    <div class = "hpBorder">
+                        <div id = "tyranitarHP" class = "hpBar"></div>
+                    </div>
+                    <!--Seperation-->
+                    <p id = "tyranitarMoves">
+                        <!--List of attacks-->
+                        <!--class hplabel to retain font-->
+                        <span class = "hpLabel">Attacks</span><br>
+                        <!--Button showing attacks-->
+                        <button onclick = "tackle()" class="buttonFormat" >Tackle</button>
+                        <br>
+                        <button onclick = "protect()" class="buttonFormat">Protect</button>
+                        <button onclick = "headSmash()" class="buttonFormat">Head Smash</button>
+                        <button onclick = "explosion()" class="buttonFormat">Explosion</button>
+                    </p>
+                </div>
+                <!--Puts the gif images of the characters we will use-->
+                <!--Chars are there for space between the characters-->
+                <div id = "tyranitar" class = "chars">
+                    <img src = "images/ttar.gif">
+                </div>
+                <!--Other gif img-->
+                <!--Chars are there for space between the characters-->
+                <div id = "mechaTyranitar" class = "chars">
+                    <img src = "images/MT.gif">
+                </div>
+                <div id = "mechaStats" class = "stats">
+                    <span class = "hpLabel"> HP </span>
+                    <div class = "hpBorder">
+                        <div id = "mechaHP" class = "hpBar"></div>
+                    </div>
+                </div>
+            </div>
+            <!--This bottom row will be for texts and stuff-->
+            <div id = "bottomRow">
+                <h1>Welcome to the fight of the Tyranitars!</h1>
+                <p>Tyranitar vs Mecha Tyranitar</p>
+                <p>You are playing as Tyranitar</p>
+                <!--The play button, this will foollow the button format for the whole html from css-->
+                <button onclick="play()" class="buttonFormat">Play</button>
+            </div>
+        </div>
+    <script type = "text/javascript" src = "script.js"></script>
+    </body>
+</html>

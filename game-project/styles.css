@@ -1,0 +1,99 @@
+/* the styling for the toprow of the page*/
+#topRow{
+    display: flex;
+    flex-direction: row;
+    /*centers the images*/
+    justify-content: center;
+    /*aligns the imgs to where we want them to be*/
+    align-items: flex-end;
+}
+ /* accesses properties of tyranitar */
+#tyranitar{
+    /*makes the position mirrored*/
+    transform: scaleX(-1);
+}
+
+/*modifies the img for Tyranitar*/
+#tyranitar img{
+    height: 200px;
+}
+
+
+
+/*modifies the img for Mecha Tyranitar*/
+#mechaTyranitar img{
+    height: 200px;
+}
+
+/* spaces the characters by 15 pixels top and bottom and 40 on the side*/
+.chars {
+    margin: 15px 40px;
+}
+
+/* modifies bottom text */
+/*padding sepeartes top and bottom*/
+/*made a specific font so it looks somewhat decent compared to default */
+#bottomRow{
+    padding: 20px;
+    font: 15pt Arial;
+    /* puts the bottom text in center */
+    text-align: center;
+}
+
+/*stylizing the stats of the character*/
+.stats{
+    width: 350px;
+    height: 400px;
+    /*in the beginning the stats should be hidden*/
+    visibility: hidden;
+}
+
+/* modifies buttons in stats portions*/
+.buttonFormat{
+    /*General background color for the attack options*/
+    background-color: white;
+    /*size of border*/
+    border: 3px solid;
+    /*color of border, in this case black*/
+    border-color: black;
+    /*Font of the attack options*/
+    font: 20pt Arial;
+    /*makes the border non squares*/
+    border-radius: 20px;
+    /*The padding will be 10 pixels top and bottom and 35 pixels to the side*/
+    padding: 10px 35px;
+}
+
+/* What the buttons will look like if hovered over*/
+.buttonFormat:hover{
+    background-color: black;
+    color: white;
+}
+/*the label for the HP*/
+.hpLabel{
+    font: 15pt Arial;
+    font-weight: bold;
+}
+
+/* This established the borderline for the HP Bad*/
+.hpBorder{
+    /*sets a width*/
+    width: 300px;
+    /*sets a height*/
+    height: 30px;
+    /*sets how the border should look*/
+    border: 3px solid;
+    /*border color*/
+    border-color: black;
+}
+
+/*sets the HP bar */
+/*most the parameters same as hpBorder to fit inside the border for the bar*/
+.hpBar{
+    /*sets a width*/
+    width: 300px;
+    /*sets a height*/
+    height: 30px;
+    /*sets the background color*/
+    background-color: green;
+}
