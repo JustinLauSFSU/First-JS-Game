@@ -125,17 +125,25 @@ function tackle(){
         var mechaHPBarWidth = (mechaHP/100)*300;
         //new width
         mechaHP.style.width = mechaHPBarWidth + "px";
+
+        //if the enemy HP is 0, it tells the user they won
+        if (mechaHP == 0){
+            //the reason for += is because we want to see the damage done before the win message shows
+            bottomRow.innerHTML += "<br> You succesfully defeated Mecha Tyranitar! You win!";
+            //bbuttons go away once you win
+            tyranitarMoves.style.visibility = "hidden";
+        }
     }
     else{
         bottomRow.innerHTML = "Your attack missed";
     }
     //if the enemy HP is 0, it tells the user they won
-    if (mechaHP == 0){
+    /*if (mechaHP == 0){
         //the reason for += is because we want to see the damage done before the win message shows
         bottomRow.innerHTML += "<br> You succesfully defeated Mecha Tyranitar! You win!";
         //bbuttons go away once you win
         tyranitarMoves.style.visibility = "hidden";
-    }
+    }*/
     /*else{
         mechaAttack();
     }*/
