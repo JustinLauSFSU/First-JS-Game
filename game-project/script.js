@@ -42,14 +42,21 @@ function mechaAttack(){
             mechaHP = 0;
         }
         //tells the user they hit
-        bottomRow.innerHTML += "Mecha Tyranitar used Tackle! <br> You took " + damage + " damage. You now have " + tyranitarHP + " HP.";
+        bottomRow.innerHTML += "<br> Mecha Tyranitar used Tackle! <br> You took " + damage + " damage. You now have " + tyranitarHP + " HP.";
         //variable for HP width
         var tyranitarHPBarWidth = (tyranitarHP/100)*300;
         //new width
         tyranitarHP.style.width = tyranitarHPBarWidth + "px";
-    }
+        }
         else{
-            bottomRow.innerHTML += "Mecha Tyranitar's attack missed";
+            bottomRow.innerHTML += "<br> Mecha Tyranitar used Tackle! <br> Mecha Tyranitar's attack missed";
+        }
+        //if tyranitar's hp is 0 display loss message
+        if (tyranitarHP == 0){
+            //the reason for += is because we want to see the damage done before the lose message shows
+            bottomRow.innerHTML += "<br> You have been defeated! <br> <button onclick = 'restart()' class='buttonFormat'> Try Again? </button>";
+            //bbuttons go away once you lose
+            tyranitarMoves.style.visibility = "hidden";
         }
     }
     //if choice is 2 run this
@@ -67,14 +74,22 @@ function mechaAttack(){
             mechaHP = 0;
         }
         //tells the user they hit
-        bottomRow.innerHTML = "Mecha Tyranitar used Metal Punch! <br> You took " + damage + " damage. You now have " + tyranitarHP + " HP.";
+        bottomRow.innerHTML = "<br> Mecha Tyranitar used Metal Punch! <br> You took " + damage + " damage. You now have " + tyranitarHP + " HP.";
         //variable for HP width
         var tyranitarHPBarWidth = (tyranitarHP/100)*300;
         //new width
         tyranitarHP.style.width = tyranitarHPBarWidth + "px";
-    }
+        }
         else{
-        bottomRow.innerHTML += "Mecha Tyranitar's attack missed";
+        bottomRow.innerHTML += "<br> Mecha Tyranitar used Metal Punch! <br> Mecha Tyranitar's attack missed";
+        }
+
+        //if tyranitar's hp is 0 display loss message
+        if (tyranitarHP == 0){
+            //the reason for += is because we want to see the damage done before the lose message shows
+            bottomRow.innerHTML += "<br> You have been defeated! <br> <button onclick = 'restart()' class='buttonFormat'> Try Again? </button>";
+            //bbuttons go away once you lose
+            tyranitarMoves.style.visibility = "hidden";
         }
     }
     //if choice is 3 run this
@@ -92,14 +107,22 @@ function mechaAttack(){
                 mechaHP = 0;
             }
         //tells the user they hit
-        bottomRow.innerHTML += "Mecha Tyranitar used Mecha Beam! <br> You took " + damage + " damage. You now have " + tyranitarHP + " HP.";
+        bottomRow.innerHTML += "<br> Mecha Tyranitar used Mecha Beam! <br> You took " + damage + " damage. You now have " + tyranitarHP + " HP.";
         //variable for HP width
         var tyranitarHPBarWidth = (tyranitarHP/100)*300;
         //new width
         tyranitarHP.style.width = tyranitarHPBarWidth + "px";
         }
         else{
-        bottomRow.innerHTML += "Mecha Tyranitar's attack missed";
+        bottomRow.innerHTML += "<br> Mecha Tyraniatar used Mecha Beam! <br> Mecha Tyranitar's attack missed";
+        }
+
+        //if tyranitar's hp is 0 display loss message
+        if (tyranitarHP == 0){
+            //the reason for += is because we want to see the damage done before the lose message shows
+            bottomRow.innerHTML += "<br> You have been defeated! <br> <button onclick = 'restart()' class='buttonFormat'> Try Again? </button>";
+            //bbuttons go away once you lose
+            tyranitarMoves.style.visibility = "hidden";
         }
     }
 }
@@ -135,12 +158,12 @@ function tackle(){
         }*/
     }
     else{
-        bottomRow.innerHTML = "Your attack missed";
+        bottomRow.innerHTML = "Tyranitar used Tackle! <br> Your attack missed!";
     }
     //if the enemy HP is 0, it tells the user they won
     if (mechaHP == 0){
         //the reason for += is because we want to see the damage done before the win message shows
-        bottomRow.innerHTML += "<br> You succesfully defeated Mecha Tyranitar! You win!";
+        bottomRow.innerHTML += "<br> You succesfully defeated Mecha Tyranitar! You win! <br> <button onclick = 'restart()' class='buttonFormat'> Play Again? </button>";
         //bbuttons go away once you win
         tyranitarMoves.style.visibility = "hidden";
     }
@@ -187,12 +210,12 @@ function headSmash(){
         mechaHP.style.width = mechaHPBarWidth + "px";
     }
     else{
-        bottomRow.innerHTML = "Your attack missed";
+        bottomRow.innerHTML = "Tyranitar used Head Smash! <br> Your attack missed!";
     }
     //if the enemy HP is 0, it tells the user they won
     if (mechaHP == 0){
         //the reason for += is because we want to see the damage done before the win message shows
-        bottomRow.innerHTML += "<br> You succesfully defeated Mecha Tyranitar! You win!";
+        bottomRow.innerHTML += "<br> You succesfully defeated Mecha Tyranitar! You win! <br> <button onclick = 'restart()' class='buttonFormat'> Play Again? </button>";
         //bbuttons go away once you win
         tyranitarMoves.style.visibility = "hidden";
     }
@@ -201,7 +224,7 @@ function headSmash(){
     }
     if (tyranitarHP == 0){
         //the reason for += is because we want to see the damage done before the lose message shows
-        bottomRow.innerHTML += "<br> You have been defeated!";
+        bottomRow.innerHTML += "<br> You have been defeated! <br> <button onclick = 'restart()' class='buttonFormat'> Try Again? </button>";
         //bbuttons go away once you lose
         tyranitarMoves.style.visibility = "hidden";
     }
@@ -232,7 +255,7 @@ function explosion(){
     //tells the user they have 0HP left
     bottomRow.innerHTML = "Tyranitar used Explosion! <br> Your Explosion did " + damage + " damage. Mecha Tyranitar now has " + mechaHP + " HP. <br> You have 0 HP left";
     //tells the user they lose
-    bottomRow.innerHTML += "<br> You have been defeated! <br> <button onclick = 'restart()' class='buttonFormat'> Try Again? </button>" 
+    bottomRow.innerHTML += "<br> You have been defeated! <br> <button onclick = 'restart()' class='buttonFormat'> Try Again? </button>";
     //bbuttons go away once you lose
     tyranitarMoves.style.visibility = "hidden";
     //variable for HP width
