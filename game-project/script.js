@@ -2,8 +2,8 @@
 var bottomRow = document.getElementById('bottomRow');
 var stats = document.getElementsByClassName('stats');
 var tyranitarStats = document.getElementById('tyranitarStats');
-var tyranitarHP = document.getElementById('tyranitarHP');
-var mechaHP = document.getElementById('mechaHP');
+var tyranitarHPBar = document.getElementById('tyranitarHP');
+var mechaHPBar = document.getElementById('mechaHP');
 var tyranitarMoves = document.getElementById('tyranitarMoves');
 
 //Defines HP
@@ -14,6 +14,8 @@ var mechaHP = 100;
 function play(){
     //once the button is pressed, you show this text now
     bottomRow.innerHTML = "Pick the attack you want Tyranitar to use by clicking one of the attacks.";
+
+    tyranitarHPBar.style.width = mechaHPBar.style.width = '300px'; 
     //as long as x is between 0 and the length of stats run this
     //this will show the stats of both sides
     //for loop as it's more efficient to do this than call it individually
@@ -33,28 +35,33 @@ function mechaAttack(){
         var accuracy = Math.round(Math.random()*100);
         //This is intended to make the attack 95% accurate with a chance to miss
         if(accuracy <=95){
-        //this will make the damage dealt between 5 and 15
-        var damage = Math.round(Math.random()*10)+5;
-        //reduces mechaHP once tackle is called
-        tyranitarHP -= damage;
-        //incase the enemy's HP somehow ends negative, set it to 0
-        if (tyranitarHP < 0){
-            mechaHP = 0;
-        }
-        //tells the user they hit
-        bottomRow.innerHTML += "<br> Mecha Tyranitar used Tackle! <br> You took " + damage + " damage. You now have " + tyranitarHP + " HP.";
-        //variable for HP width
-        var tyranitarHPBarWidth = (tyranitarHP/100)*300;
-        //new width
-        tyranitarHP.style.width = tyranitarHPBarWidth + "px";
+            //this will make the damage dealt between 5 and 15
+            var damage = Math.round(Math.random()*10)+5;
+            //reduces mechaHP once tackle is called
+            tyranitarHP -= damage;
+            //incase the enemy's HP somehow ends negative, set it to 0
+            if (mechaHP < 0){
+                mechaHP = 0;
+            }
+            if (tyranitarHP < 0) {
+                tyranitarHP = 0;
+            }
+            //tells the user they hit
+            bottomRow.innerHTML += "<br> Mecha Tyranitar used Tackle! <br> You took " + damage + " damage. You now have " + tyranitarHP + " HP.";
+            //variable for HP width
+            var tyranitarHPBarWidth = (tyranitarHP/100)*300;
+            //new width
+            tyranitarHPBar.style.width = tyranitarHPBarWidth + "px";
         }
         else{
             bottomRow.innerHTML += "<br> Mecha Tyranitar used Tackle! <br> Mecha Tyranitar's attack missed";
         }
         //if tyranitar's hp is 0 display loss message
-        if (tyranitarHP == 0){
+        if (tyranitarHP <= 0){
+            console.log(tyranitarHP);
             //the reason for += is because we want to see the damage done before the lose message shows
             bottomRow.innerHTML += "<br> You have been defeated! <br> <button onclick = 'restart()' class='buttonFormat'> Try Again? </button>";
+            tyranitarHPBar.style.width = '0';
             //bbuttons go away once you lose
             tyranitarMoves.style.visibility = "hidden";
         }
@@ -70,24 +77,28 @@ function mechaAttack(){
         //reduces mechaHP once tackle is called
         tyranitarHP -= damage;
         //incase the enemy's HP somehow ends negative, set it to 0
-        if (tyranitarHP < 0){
+        if (mechaHP < 0){
             mechaHP = 0;
+        }
+        if (tyranitarHP < 0) {
+            tyranitarHP = 0;
         }
         //tells the user they hit
         bottomRow.innerHTML = "<br> Mecha Tyranitar used Metal Punch! <br> You took " + damage + " damage. You now have " + tyranitarHP + " HP.";
         //variable for HP width
         var tyranitarHPBarWidth = (tyranitarHP/100)*300;
         //new width
-        tyranitarHP.style.width = tyranitarHPBarWidth + "px";
+        tyranitarHPBar.style.width = tyranitarHPBarWidth + "px";
         }
         else{
-        bottomRow.innerHTML += "<br> Mecha Tyranitar used Metal Punch! <br> Mecha Tyranitar's attack missed";
+            bottomRow.innerHTML += "<br> Mecha Tyranitar used Metal Punch! <br> Mecha Tyranitar's attack missed";
         }
 
         //if tyranitar's hp is 0 display loss message
-        if (tyranitarHP == 0){
+        if (tyranitarHP <= 0){
             //the reason for += is because we want to see the damage done before the lose message shows
             bottomRow.innerHTML += "<br> You have been defeated! <br> <button onclick = 'restart()' class='buttonFormat'> Try Again? </button>";
+            tyranitarHPBar.style.width = '0';
             //bbuttons go away once you lose
             tyranitarMoves.style.visibility = "hidden";
         }
@@ -103,24 +114,28 @@ function mechaAttack(){
         //reduces mechaHP once tackle is called
         tyranitarHP -= damage;
         //incase the enemy's HP somehow ends negative, set it to 0
-            if (tyranitarHP < 0){
-                mechaHP = 0;
-            }
+        if (mechaHP < 0){
+            mechaHP = 0;
+        }
+        if (tyranitarHP < 0) {
+            tyranitarHP = 0;
+        }
         //tells the user they hit
         bottomRow.innerHTML += "<br> Mecha Tyranitar used Mecha Beam! <br> You took " + damage + " damage. You now have " + tyranitarHP + " HP.";
         //variable for HP width
         var tyranitarHPBarWidth = (tyranitarHP/100)*300;
         //new width
-        tyranitarHP.style.width = tyranitarHPBarWidth + "px";
+        tyranitarHPBar.style.width = tyranitarHPBarWidth + "px";
         }
         else{
-        bottomRow.innerHTML += "<br> Mecha Tyraniatar used Mecha Beam! <br> Mecha Tyranitar's attack missed";
+            bottomRow.innerHTML += "<br> Mecha Tyraniatar used Mecha Beam! <br> Mecha Tyranitar's attack missed";
         }
 
         //if tyranitar's hp is 0 display loss message
-        if (tyranitarHP == 0){
+        if (tyranitarHP <= 0){
             //the reason for += is because we want to see the damage done before the lose message shows
             bottomRow.innerHTML += "<br> You have been defeated! <br> <button onclick = 'restart()' class='buttonFormat'> Try Again? </button>";
+            tyranitarHPBar.style.width = '0';
             //bbuttons go away once you lose
             tyranitarMoves.style.visibility = "hidden";
         }
@@ -142,28 +157,33 @@ function tackle(){
         if (mechaHP < 0){
             mechaHP = 0;
         }
+        if (tyranitarHP < 0) {
+            tyranitarHP = 0;
+        }
         //tells the user they hit
         bottomRow.innerHTML = "Tyranitar used Tackle! <br> Your Tackle did " + damage + " damage. Mecha Tyranitar now has " + mechaHP + " HP.";
         //variable for HP width
         var mechaHPBarWidth = (mechaHP/100)*300;
         //new width
-        mechaHP.style.width = mechaHPBarWidth + "px";
+        mechaHPBar.style.width = mechaHPBarWidth + "px";
 
         //if the enemy HP is 0, it tells the user they won
-        /*if (mechaHP == 0){
+        if (mechaHP <= 0){
             //the reason for += is because we want to see the damage done before the win message shows
             bottomRow.innerHTML += "<br> You succesfully defeated Mecha Tyranitar! You win!";
+            mechaHPBar.style.width = '0';
             //bbuttons go away once you win
             tyranitarMoves.style.visibility = "hidden";
-        }*/
+        }
     }
     else{
         bottomRow.innerHTML = "Tyranitar used Tackle! <br> Your attack missed!";
     }
     //if the enemy HP is 0, it tells the user they won
-    if (mechaHP == 0){
+    if (mechaHP <= 0){
         //the reason for += is because we want to see the damage done before the win message shows
         bottomRow.innerHTML += "<br> You succesfully defeated Mecha Tyranitar! You win! <br> <button onclick = 'restart()' class='buttonFormat'> Play Again? </button>";
+        mechaHPBar.style.width = '0';
         //bbuttons go away once you win
         tyranitarMoves.style.visibility = "hidden";
     }
@@ -207,24 +227,23 @@ function headSmash(){
         //variable for HP width
         var mechaHPBarWidth = (mechaHP/100)*300;
         //new width
-        mechaHP.style.width = mechaHPBarWidth + "px";
+        mechaHPBar.style.width = mechaHPBarWidth + "px";
     }
     else{
         bottomRow.innerHTML = "Tyranitar used Head Smash! <br> Your attack missed!";
     }
     //if the enemy HP is 0, it tells the user they won
-    if (mechaHP == 0){
+    if (mechaHP <= 0){
         //the reason for += is because we want to see the damage done before the win message shows
         bottomRow.innerHTML += "<br> You succesfully defeated Mecha Tyranitar! You win! <br> <button onclick = 'restart()' class='buttonFormat'> Play Again? </button>";
+        mechaHPBar.style.width = '0';
         //bbuttons go away once you win
         tyranitarMoves.style.visibility = "hidden";
     }
-    else {
-        mechaAttack();
-    }
-    if (tyranitarHP == 0){
+    else if (tyranitarHP <= 0){
         //the reason for += is because we want to see the damage done before the lose message shows
         bottomRow.innerHTML += "<br> You have been defeated! <br> <button onclick = 'restart()' class='buttonFormat'> Try Again? </button>";
+        tyranitarHPBar.style.width = '0';
         //bbuttons go away once you lose
         tyranitarMoves.style.visibility = "hidden";
     }
@@ -256,12 +275,13 @@ function explosion(){
     bottomRow.innerHTML = "Tyranitar used Explosion! <br> Your Explosion did " + damage + " damage. Mecha Tyranitar now has " + mechaHP + " HP. <br> You have 0 HP left";
     //tells the user they lose
     bottomRow.innerHTML += "<br> You have been defeated! <br> <button onclick = 'restart()' class='buttonFormat'> Try Again? </button>";
+    tyranitarHPBar.style.width = '0';
     //bbuttons go away once you lose
     tyranitarMoves.style.visibility = "hidden";
     //variable for HP width
     var mechaHPBarWidth = (mechaHP/100)*300;
     //new width
-    mechaHP.style.width = mechaHPBarWidth + "px";
+    mechaHPBar.style.width = mechaHPBarWidth + "px";
     
 }
 
