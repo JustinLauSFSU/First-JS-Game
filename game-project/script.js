@@ -6,12 +6,13 @@ var tyranitarHPBar = document.getElementById('tyranitarHP');
 var mechaHPBar = document.getElementById('mechaHP');
 var tyranitarMoves = document.getElementById('tyranitarMoves');
 
-//Defines HP
-var tyranitarHP = 100;
-var mechaHP = 100;
+let tyranitar;
+let mechaTyranitar;
 
 //calls play function
 function play(){
+    tyranitar = new Tyranitar();
+    mechaTyranitar = new MechaTyranitar();
     //once the button is pressed, you show this text now
     bottomRow.innerHTML = "Pick the attack you want Tyranitar to use by clicking one of the attacks.";
 
@@ -25,273 +26,201 @@ function play(){
     }
 }
 
+function updateGameState() {
+
+    bottomRow.innerHTML = "";
+    this.showAttackMessages(tyranitar);
+    this.showAttackMessages(mechaTyranitar);
+    this.updateHealthBars();
+    
+    if(tyranitar.hp === 0 || mechaTyranitar.hp === 0) {
+        tyranitarMoves.style.visibility = "hidden";
+    }
+
+    if(tyranitar.hp === 0 && mechaTyranitar.hp === 0) {
+        this.bottomRow.innerHTML += "It was a draw!<br> <button onclick = 'restart()' class='buttonFormat'> Try Again? </button>";
+    } else if(mechaTyranitar.hp === 0) {
+        this.bottomRow.innerHTML += "Tyranitar wins!<br> <button onclick = 'restart()' class='buttonFormat'> Try Again? </button>";
+    } else if(tyranitar.hp === 0) {
+        this.bottomRow.innerHTML += "You have been defeated! <br> <button onclick = 'restart()' class='buttonFormat'> Try Again? </button>";
+    }
+
+}
+
+function showAttackMessages(pokemon) {
+
+    let missMessage = "";
+    if(pokemon.moveMissed) {
+        missMessage = " which missed! "
+    } else {
+        missMessage =  " and did " + pokemon.move.damage + " damage!"
+    }
+    bottomRow.innerHTML += pokemon.name + " used " + pokemon.move.name + missMessage + '<br>';
+
+    if(pokemon.move.recoil > 0 && !pokemon.moveMissed) {
+        bottomRow.innerHTML += pokemon.name + " was hit for " + pokemon.move.recoil + " by its own move!" + '<br>'
+    }
+}
+
+function updateHealthBars() {
+
+    let mechaHPBarWidth = (mechaTyranitar.hp/100)*300;
+    mechaHPBar.style.width = mechaHPBarWidth + "px";
+
+    let tyranitarHPBarWidth = (tyranitar.hp/100)*300;
+    tyranitarHPBar.style.width = tyranitarHPBarWidth + "px";
+}
+
 //the attack mecha tyranitar will use
 function mechaAttack(){
+    let attack;
     //chooses 2 choices for an attack
     var attackChoice = Math.ceil(Math.random()*3);
     //if choice is 1 run this
-    if (attackChoice ==1 ){
-        //This will generate a number between 1 and 100, and will round to the nearest integrer
-        var accuracy = Math.round(Math.random()*100);
-        //This is intended to make the attack 95% accurate with a chance to miss
-        if(accuracy <=95){
-            //this will make the damage dealt between 5 and 15
-            var damage = Math.round(Math.random()*10)+5;
-            //reduces mechaHP once tackle is called
-            tyranitarHP -= damage;
-            //incase the enemy's HP somehow ends negative, set it to 0
-            if (mechaHP < 0){
-                mechaHP = 0;
-            }
-            if (tyranitarHP < 0) {
-                tyranitarHP = 0;
-            }
-            //tells the user they hit
-            bottomRow.innerHTML += "<br> Mecha Tyranitar used Tackle! <br> You took " + damage + " damage. You now have " + tyranitarHP + " HP.";
-            //variable for HP width
-            var tyranitarHPBarWidth = (tyranitarHP/100)*300;
-            //new width
-            tyranitarHPBar.style.width = tyranitarHPBarWidth + "px";
-        }
-        else{
-            bottomRow.innerHTML += "<br> Mecha Tyranitar used Tackle! <br> Mecha Tyranitar's attack missed";
-        }
-        //if tyranitar's hp is 0 display loss message
-        if (tyranitarHP <= 0){
-            console.log(tyranitarHP);
-            //the reason for += is because we want to see the damage done before the lose message shows
-            bottomRow.innerHTML += "<br> You have been defeated! <br> <button onclick = 'restart()' class='buttonFormat'> Try Again? </button>";
-            tyranitarHPBar.style.width = '0';
-            //bbuttons go away once you lose
-            tyranitarMoves.style.visibility = "hidden";
-        }
+    if (attackChoice === 1 ){
+        attack = new Tackle();
+    } else if (attackChoice === 2) {
+        attack = new MechaMetalPunch();
+    } else {
+        attack = new MechaMetalBeam();
     }
-    //if choice is 2 run this
-    else if (attackChoice ==2){
-        //This will generate a number between 1 and 100, and will round to the nearest integrer
-        var accuracy = Math.round(Math.random()*100);
-        //This is intended to make the attack 65% accurate with a chance to miss
-        if(accuracy <=65){
-        //this will make the damage dealt between 26 and 41
-        var damage = Math.round(Math.random()*15)+26;
-        //reduces mechaHP once tackle is called
-        tyranitarHP -= damage;
-        //incase the enemy's HP somehow ends negative, set it to 0
-        if (mechaHP < 0){
-            mechaHP = 0;
-        }
-        if (tyranitarHP < 0) {
-            tyranitarHP = 0;
-        }
-        //tells the user they hit
-        bottomRow.innerHTML = "<br> Mecha Tyranitar used Metal Punch! <br> You took " + damage + " damage. You now have " + tyranitarHP + " HP.";
-        //variable for HP width
-        var tyranitarHPBarWidth = (tyranitarHP/100)*300;
-        //new width
-        tyranitarHPBar.style.width = tyranitarHPBarWidth + "px";
-        }
-        else{
-            bottomRow.innerHTML += "<br> Mecha Tyranitar used Metal Punch! <br> Mecha Tyranitar's attack missed";
-        }
 
-        //if tyranitar's hp is 0 display loss message
-        if (tyranitarHP <= 0){
-            //the reason for += is because we want to see the damage done before the lose message shows
-            bottomRow.innerHTML += "<br> You have been defeated! <br> <button onclick = 'restart()' class='buttonFormat'> Try Again? </button>";
-            tyranitarHPBar.style.width = '0';
-            //bbuttons go away once you lose
-            tyranitarMoves.style.visibility = "hidden";
-        }
-    }
-    //if choice is 3 run this
-    else{
-        //This will generate a number between 1 and 100, and will round to the nearest integrer
-        var accuracy = Math.round(Math.random()*100);
-        //This is intended to make the attack 45% accurate with a chance to miss
-        if(accuracy <=45){
-        //this will make the damage dealt between 50 and 60
-        var damage = Math.round(Math.random()*10)+50;
-        //reduces mechaHP once tackle is called
-        tyranitarHP -= damage;
-        //incase the enemy's HP somehow ends negative, set it to 0
-        if (mechaHP < 0){
-            mechaHP = 0;
-        }
-        if (tyranitarHP < 0) {
-            tyranitarHP = 0;
-        }
-        //tells the user they hit
-        bottomRow.innerHTML += "<br> Mecha Tyranitar used Mecha Beam! <br> You took " + damage + " damage. You now have " + tyranitarHP + " HP.";
-        //variable for HP width
-        var tyranitarHPBarWidth = (tyranitarHP/100)*300;
-        //new width
-        tyranitarHPBar.style.width = tyranitarHPBarWidth + "px";
-        }
-        else{
-            bottomRow.innerHTML += "<br> Mecha Tyraniatar used Mecha Beam! <br> Mecha Tyranitar's attack missed";
-        }
-
-        //if tyranitar's hp is 0 display loss message
-        if (tyranitarHP <= 0){
-            //the reason for += is because we want to see the damage done before the lose message shows
-            bottomRow.innerHTML += "<br> You have been defeated! <br> <button onclick = 'restart()' class='buttonFormat'> Try Again? </button>";
-            tyranitarHPBar.style.width = '0';
-            //bbuttons go away once you lose
-            tyranitarMoves.style.visibility = "hidden";
-        }
-    }
+    mechaTyranitar.updateMove(attack);
+    mechaTyranitar.attack(tyranitar);
+    this.updateGameState();
 }
 
 //the function to call tackle
 function tackle(){
-    
-    //This will generate a number between 1 and 100, and will round to the nearest integrer
-    var accuracy = Math.round(Math.random()*100);
-    //This is intended to make the attack 95% accurate with a chance to miss
-    if(accuracy <=95){
-        //this will make the damage dealt between 5 and 15
-        var damage = Math.round(Math.random()*10)+5;
-        //reduces mechaHP once tackle is called
-        mechaHP -= damage;
-        //incase the enemy's HP somehow ends negative, set it to 0
-        if (mechaHP < 0){
-            mechaHP = 0;
-        }
-        if (tyranitarHP < 0) {
-            tyranitarHP = 0;
-        }
-        //tells the user they hit
-        bottomRow.innerHTML = "Tyranitar used Tackle! <br> Your Tackle did " + damage + " damage. Mecha Tyranitar now has " + mechaHP + " HP.";
-        //variable for HP width
-        var mechaHPBarWidth = (mechaHP/100)*300;
-        //new width
-        mechaHPBar.style.width = mechaHPBarWidth + "px";
-
-        //if the enemy HP is 0, it tells the user they won
-        if (mechaHP <= 0){
-            //the reason for += is because we want to see the damage done before the win message shows
-            bottomRow.innerHTML += "<br> You succesfully defeated Mecha Tyranitar! You win!";
-            mechaHPBar.style.width = '0';
-            //bbuttons go away once you win
-            tyranitarMoves.style.visibility = "hidden";
-        }
-    }
-    else{
-        bottomRow.innerHTML = "Tyranitar used Tackle! <br> Your attack missed!";
-    }
-    //if the enemy HP is 0, it tells the user they won
-    if (mechaHP <= 0){
-        //the reason for += is because we want to see the damage done before the win message shows
-        bottomRow.innerHTML += "<br> You succesfully defeated Mecha Tyranitar! You win! <br> <button onclick = 'restart()' class='buttonFormat'> Play Again? </button>";
-        mechaHPBar.style.width = '0';
-        //bbuttons go away once you win
-        tyranitarMoves.style.visibility = "hidden";
-    }
-    //mecha Tyranitar will attack if it doesn't die
-    else{
-        mechaAttack();
-    }
+    tyranitar.updateMove(new Tackle());
+    tyranitar.attack(mechaTyranitar);
+    this.mechaAttack();
+    this.updateGameState();
 }
 
 //calls the move protect
 //like protect in pokemon this is intended to protect you from damage
 function protect(){
-    bottomRow.innerHTML = "Tyranitar used protect! <br> Mecha Tyranitar's attack missed! You took no damage."
+    tyranitar.updateMove(new Protect());
+    tyranitar.attack(mechaTyranitar);
+    this.updateGameState();
 }
 
 //calls the move head smash
 function headSmash(){
-    //This will generate a number between 1 and 100, and will round to the nearest integrer
-    var accuracy = Math.round(Math.random()*100);
-    //This is intended to make the attack 80% accurate with a chance to miss
-    if(accuracy <=80){
-        //this will make the damage dealt between 30 and 45
-        var damage = Math.round(Math.random()*15)+30;
-        //the recoil damage when calling this move is 1/3 of the damage dealt
-        var recoil = Math.round((damage/3));
-        //reduces mechaHP once tackle is called
-        mechaHP -= damage;
-        //the recoil damage dealt
-        tyranitarHP -= recoil;
-        //incase the enemy's HP somehow ends negative, set it to 0
-        if (mechaHP < 0){
-            mechaHP = 0;
-        }
-        //if your HP is negative, make it 0
-        if (tyranitarHP < 0){
-            tyranitarHP = 0;
-        }
-        //tells the user they hit
-        //also includes recoil message
-        bottomRow.innerHTML = "Tyranitar used Head Smash! <br> Your Head Smash did " + damage + " damage. Mecha Tyranitar now has " + mechaHP + " HP. <br> You took " +recoil + " damage due to recoil. You have "+ tyranitarHP + " left.";
-        //variable for HP width
-        var mechaHPBarWidth = (mechaHP/100)*300;
-        //new width
-        mechaHPBar.style.width = mechaHPBarWidth + "px";
+    tyranitar.updateMove(new HeadSmash());
+    tyranitar.attack(mechaTyranitar);
+    if(tyranitar.hp > 0) {
+        this.mechaAttack();
     }
-    else{
-        bottomRow.innerHTML = "Tyranitar used Head Smash! <br> Your attack missed!";
-    }
-    //if the enemy HP is 0, it tells the user they won
-    if (mechaHP <= 0){
-        //the reason for += is because we want to see the damage done before the win message shows
-        bottomRow.innerHTML += "<br> You succesfully defeated Mecha Tyranitar! You win! <br> <button onclick = 'restart()' class='buttonFormat'> Play Again? </button>";
-        mechaHPBar.style.width = '0';
-        //bbuttons go away once you win
-        tyranitarMoves.style.visibility = "hidden";
-    }
-    else if (tyranitarHP <= 0){
-        //the reason for += is because we want to see the damage done before the lose message shows
-        bottomRow.innerHTML += "<br> You have been defeated! <br> <button onclick = 'restart()' class='buttonFormat'> Try Again? </button>";
-        tyranitarHPBar.style.width = '0';
-        //bbuttons go away once you lose
-        tyranitarMoves.style.visibility = "hidden";
-    }
-    else{
-        mechaAttack();
-    }
+    this.updateGameState();
 }
 
 //This calls the move explosion, will always result in a loss
 function explosion(){
-    //This will generate a number between 1 and 100, and will round to the nearest integrer
-    var accuracy = Math.round(Math.random()*100);
-    //this will do between 50 to 100 damage
-    var damage = Math.round(Math.random()*50)+50;
-    //reduces mechaHP once tackle is called
-    mechaHP -= damage;
-    //using explosion results in instant death
-    tyranitarHP -= tyranitarHP;
-    //incase the enemy's HP somehow ends negative, set it to 0
-    if (mechaHP < 0){
-        mechaHP = 0;
+    tyranitar.updateMove(new Explosion());
+    tyranitar.attack(mechaTyranitar);
+    if(tyranitar.hp > 0) {
+        this.mechaAttack();
     }
-    //if your HP is negative, make it 0
-    if (tyranitarHP < 0){
-        tyranitarHP = 0;
-    }
-    //tells the user they hit
-    //tells the user they have 0HP left
-    bottomRow.innerHTML = "Tyranitar used Explosion! <br> Your Explosion did " + damage + " damage. Mecha Tyranitar now has " + mechaHP + " HP. <br> You have 0 HP left";
-    //tells the user they lose
-    bottomRow.innerHTML += "<br> You have been defeated! <br> <button onclick = 'restart()' class='buttonFormat'> Try Again? </button>";
-    tyranitarHPBar.style.width = '0';
-    //bbuttons go away once you lose
-    tyranitarMoves.style.visibility = "hidden";
-    //variable for HP width
-    var mechaHPBarWidth = (mechaHP/100)*300;
-    //new width
-    mechaHPBar.style.width = mechaHPBarWidth + "px";
-    
+    this.updateGameState();
 }
 
 //this will restart the game once the battle is finished
 function restart(){
     //sets the character HP back to the default 100;
-    tyranitarHP = 100;
-    mechaHP = 100;
+    tyranitar = new Tyranitar();
+    mechaTyranitar = new MechaTyranitar();
     //will show attacks again
     tyranitarMoves.style.visibility = "visible";
     //will call the play function again
     play();
+}
+
+class Pokemon {
+    constructor(name, move) {
+        this.name = name;
+        this.move = move;
+        this.hp = 100;
+        this.moveMissed = false;
+    }
+
+    updateMove(move) {
+        this.move = move;
+    }
+
+    attack(target) {
+        const randNum = Math.round(Math.random()*100);
+
+        if(randNum <= this.move.accuracy) {
+            this.moveMissed = false;
+            target.hp -= this.move.damage;
+            this.hp -= this.move.recoil;
+        } else {
+            this.moveMissed = true;
+        }
+
+        if(target.hp < 0) {
+            target.hp = 0;
+        }
+    }
+}
+
+class Tyranitar extends Pokemon{
+    constructor() {
+        super("Tyranitar");
+    }
+}
+
+class MechaTyranitar extends Pokemon {
+    constructor() {
+        super("Mecha Tyranitar");
+    }
+
+}
+
+class PokemonMove {
+    constructor(damage, accuracy, recoil, name) {
+        this.damage = damage;
+        this.accuracy = accuracy;
+        this.recoil = recoil;
+        this.name = name;
+    }
+}
+
+class Tackle extends PokemonMove {
+    constructor() {
+        super(Math.round(Math.random()*10)+5, 95, 0, "Tackle");
+    }
+}
+
+class Protect extends PokemonMove {
+    constructor() {
+        super(0, 100, 0, "Protect");
+    }
+}
+
+class MechaMetalPunch extends PokemonMove {
+    constructor() {
+        super(Math.round(Math.random()*15)+26, 65, 0, "Metal Punch");
+    }
+}
+
+class MechaMetalBeam extends PokemonMove {
+    constructor() {
+        super(Math.round(Math.random()*10)+50, 45, 0, "Metal Beam");
+    }
+}
+
+class HeadSmash extends PokemonMove {
+    constructor() {
+        super(Math.round(Math.random()*15)+30, 80, 0, "Head Smash");
+        this.recoil = Math.round((this.damage/3));
+    }
+}
+
+class Explosion extends PokemonMove {
+    constructor() {
+        super(Math.round(Math.random()*50)+50, 100, 100, "Explosion");
+    }
 }
